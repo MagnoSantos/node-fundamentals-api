@@ -87,6 +87,17 @@ exports.put = (req, res, next) => {
     });
 };
 
-exports.delete = (req, res, next) => {
-  res.status(204).send(req.body);
+exports.deleteById = (req, res, next) => {
+  Product.findOneAndRemove(req.params.id)
+    .then(() => {
+      res.status(204).send({
+        message: "Produto removido com sucesso",
+      });
+    })
+    .catch((ex) => {
+      res.status(400).send({
+        message: "Falha ao remover o produto",
+        data: ex,
+      });
+    });
 };
