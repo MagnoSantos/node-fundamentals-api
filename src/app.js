@@ -1,15 +1,34 @@
-'use strict'
-const express = require('express');
+"use strict";
+const express = require("express");
 
 const app = express();
 const router = express.Router();
 
-const route = router.get('/', (req, res, next) => {
-    res.status(200).send({
-        title: 'Node Fundamentals', 
-        version: '0.0.1'
-    });
+const route = router.get("/", (req, res, next) => {
+  res.status(200).send({
+    title: "Node Fundamentals",
+    version: "0.0.1",
+  });
 });
-app.use('/', route);
+
+const create = router.post("/", (req, res, next) => {
+  res.status(201).send(req.body);
+});
+
+const put = router.put("/:id", (req, res, next) => {
+  const id = req.params.id;
+  res.status(201).send({ id: id, item: req.body });
+});
+
+const del = router.delete("/", (req, res, next) => {
+  res.status(204).send(req.body);
+});
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use("/", route);
+app.use("/products", create);
+app.use("/products", put);
+app.use("/products", del);
 
 module.exports = app;
