@@ -35,6 +35,22 @@ exports.getById = (req, res, next) => {
     });
 };
 
+exports.getByTag = (req, res, next) => {
+  Product.find(
+    {
+      tags: req.params.tag,
+      active: true,
+    },
+    "title description price slug tags"
+  )
+    .then((data) => {
+      res.status(200).send(data);
+    })
+    .catch((ex) => {
+      res.status(400).send(ex);
+    });
+};
+
 exports.post = (req, res, next) => {
   var product = new Product(req.body);
   product
@@ -50,8 +66,25 @@ exports.post = (req, res, next) => {
 };
 
 exports.put = (req, res, next) => {
-  const id = req.params.id;
-  res.status(201).send({ id: id, item: req.body });
+  Product.findByIdAndUpdate(req.params.id, {
+    $set: {
+      title: req.body.title,
+      description: req.body.description,
+      price: req.body.price,
+      slug: req.body.slug,
+    },
+  })
+    .then(() => {
+      res.status(200).send({
+        message: "Produto atualizado com sucesso",
+      });
+    })
+    .catch((ex) => {
+      res.status(400).send({
+        message: "Falha ao atualizar produto",
+        data: ex,
+      });
+    });
 };
 
 exports.delete = (req, res, next) => {
