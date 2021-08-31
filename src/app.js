@@ -5,6 +5,7 @@ const express = require("express");
 require("mongoose").connect("mongodb://magno:e296cd9f@localhost:27017/admin");
 require("./models/products-model");
 require("./models/customer-model");
+require("./models/order-model");
 
 const app = express();
 app.use(express.json());
