@@ -2,8 +2,7 @@
 const express = require("express");
 
 //Conecta banco de dados
-const mongoose = require("mongoose");
-mongoose.connect("mongodb://magno:e296cd9f@localhost:27017/admin");
+require("mongoose").connect("mongodb://magno:e296cd9f@localhost:27017/admin");
 require("./models/products-model");
 
 const app = express();
