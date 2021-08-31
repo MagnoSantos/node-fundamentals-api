@@ -1,91 +1,71 @@
 "use strict";
 const repository = require("../repositories/products-repository");
 
-exports.get = (req, res, next) => {
-  repository
-    .get()
-    .then((data) => {
-      res.status(200).send(data);
-    })
-    .catch((ex) => {
-      res.status(400).send(ex);
-    });
+exports.get = async (req, res, next) => {
+  try {
+    const data = await repository.get();
+    res.status(200).send(data);
+  } catch (ex) {
+    onError(ex, res);
+  }
 };
 
-exports.getBySlug = (req, res, next) => {
-  repository
-    .getBySlug(req.params.slug)
-    .then((data) => {
-      res.status(200).send(data);
-    })
-    .catch((ex) => {
-      res.status(400).send(ex);
-    });
+exports.getBySlug = async (req, res, next) => {
+  try {
+    const data = await repository.getBySlug(req.params.slug);
+    res.status(200).send(data);
+  } catch (ex) {
+    onError(ex, res);
+  }
 };
 
-exports.getById = (req, res, next) => {
-  repository
-    .getById(req.params.id)
-    .then((data) => {
-      res.status(200).send(data);
-    })
-    .catch((ex) => {
-      res.status(400).send(ex);
-    });
+exports.getById = async (req, res, next) => {
+  try {
+    const data = await repository.getById(req.params.id);
+    res.status(200).send(data);
+  } catch (ex) {
+    onError(ex, res);
+  }
 };
 
-exports.getByTag = (req, res, next) => {
-  repository
-    .getByTag(req.params.tag)
-    .then((data) => {
-      res.status(200).send(data);
-    })
-    .catch((ex) => {
-      res.status(400).send(ex);
-    });
+exports.getByTag = async (req, res, next) => {
+  try {
+    const data = await repository.getByTag(req.params.tag);
+    res.status(200).send(data);
+  } catch (ex) {
+    onError(ex, res);
+  }
 };
 
-exports.post = (req, res, next) => {
-  repository
-    .create(req.body)
-    .then(() => {
-      res.status(201).send({ message: "Produto cadastrado com sucesso" });
-    })
-    .catch((ex) => {
-      res
-        .status(400)
-        .send({ message: "Falha ao cadastrar o produto", data: ex });
-    });
+exports.post = async (req, res, next) => {
+  try {
+    await repository.create(req.body);
+    res.status(201).send({ message: "Produto cadastrado com sucesso!" });
+  } catch (ex) {
+    onError(ex, res);
+  }
 };
 
-exports.put = (req, res, next) => {
-  repository
-    .update(req.params.id, req.body)
-    .then(() => {
-      res.status(200).send({
-        message: "Produto atualizado com sucesso",
-      });
-    })
-    .catch((ex) => {
-      res.status(400).send({
-        message: "Falha ao atualizar produto",
-        data: ex,
-      });
-    });
+exports.put = async (req, res, next) => {
+  try {
+    await repository.update(req.params.id, req.body);
+    res.status(200).send({ message: "Produto atualizado com sucesso!" });
+  } catch (ex) {
+    onError(ex, res);
+  }
 };
 
-exports.deleteById = (req, res, next) => {
-  repository
-    .delete(req.params.id)
-    .then(() => {
-      res.status(204).send({
-        message: "Produto removido com sucesso",
-      });
-    })
-    .catch((ex) => {
-      res.status(400).send({
-        message: "Falha ao remover o produto",
-        data: ex,
-      });
-    });
+exports.deleteById = async (req, res, next) => {
+  try {
+    await repository.delete(req.params.id);
+    res.status(204).send({ message: "Produto removido com sucesso!" });
+  } catch (ex) {
+    onError(ex, res);
+  }
 };
+
+function onError(ex, res) {
+  res
+    .status(500)
+    .send({ message: "Falha ao processar a requisição", data: ex });
+}
