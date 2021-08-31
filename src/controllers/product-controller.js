@@ -1,9 +1,9 @@
 "use strict";
-const mongoose = require("mongoose");
-const Product = mongoose.model("Products");
+const repository = require("../repositories/products-repository");
 
 exports.get = (req, res, next) => {
-  Product.find({ active: true }, "title price slug")
+  repository
+    .get()
     .then((data) => {
       res.status(200).send(data);
     })
@@ -13,10 +13,8 @@ exports.get = (req, res, next) => {
 };
 
 exports.getBySlug = (req, res, next) => {
-  Product.findOne(
-    { active: true, slug: req.params.slug },
-    "title description price slug tags"
-  )
+  repository
+    .getBySlug(req.params.slug)
     .then((data) => {
       res.status(200).send(data);
     })
@@ -26,7 +24,8 @@ exports.getBySlug = (req, res, next) => {
 };
 
 exports.getById = (req, res, next) => {
-  Product.findById(req.params.id)
+  repository
+    .getById(req.params.id)
     .then((data) => {
       res.status(200).send(data);
     })
@@ -36,13 +35,8 @@ exports.getById = (req, res, next) => {
 };
 
 exports.getByTag = (req, res, next) => {
-  Product.find(
-    {
-      tags: req.params.tag,
-      active: true,
-    },
-    "title description price slug tags"
-  )
+  repository
+    .getByTag(req.params.tag)
     .then((data) => {
       res.status(200).send(data);
     })
@@ -52,9 +46,8 @@ exports.getByTag = (req, res, next) => {
 };
 
 exports.post = (req, res, next) => {
-  var product = new Product(req.body);
-  product
-    .save()
+  repository
+    .create(req.body)
     .then(() => {
       res.status(201).send({ message: "Produto cadastrado com sucesso" });
     })
@@ -66,14 +59,8 @@ exports.post = (req, res, next) => {
 };
 
 exports.put = (req, res, next) => {
-  Product.findByIdAndUpdate(req.params.id, {
-    $set: {
-      title: req.body.title,
-      description: req.body.description,
-      price: req.body.price,
-      slug: req.body.slug,
-    },
-  })
+  repository
+    .update(req.params.id, req.body)
     .then(() => {
       res.status(200).send({
         message: "Produto atualizado com sucesso",
@@ -88,7 +75,8 @@ exports.put = (req, res, next) => {
 };
 
 exports.deleteById = (req, res, next) => {
-  Product.findOneAndRemove(req.params.id)
+  repository
+    .delete(req.params.id)
     .then(() => {
       res.status(204).send({
         message: "Produto removido com sucesso",
