@@ -1,8 +1,9 @@
 "use strict";
 const express = require("express");
+const config = require("./config");
 
 //Conecta banco de dados
-require("mongoose").connect("mongodb://magno:e296cd9f@localhost:27017/admin");
+require("mongoose").connect(config.connectionString);
 require("./models/products-model");
 require("./models/customer-model");
 require("./models/order-model");
