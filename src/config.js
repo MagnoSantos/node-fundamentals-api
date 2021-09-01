@@ -3,6 +3,5 @@ global.EMAIL_TMPL = "<strong>{0}</strong>";
 
 module.exports = {
   connectionString: "mongodb://magno:e296cd9f@localhost:27017/admin",
-  sendgridKey = "TBD", 
-  containerConnectionString: "TBD"
+  containerConnectionString: "TBD",
 };
