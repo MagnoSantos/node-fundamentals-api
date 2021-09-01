@@ -10,6 +10,13 @@ exports.post = async (req, res, next) => {
       email: req.body.email,
       password: await hash.encryptPassword(req.body.password),
     });
+
+    emailService.send(
+      req.body.email,
+      "Bem vindo ao Node Fundamentals",
+      global.EMAIL_TMPL.replace("{0}", req.body.name)
+    );
+
     res.status(201).send({ message: "Customer cadastrado com sucesso" });
   } catch (ex) {
     handler.onError(ex, res);
