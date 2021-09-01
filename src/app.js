@@ -14,5 +14,6 @@ app.use(express.urlencoded({ extended: false }));
 //Carrega rotas
 app.use("/", require("./routes/index-routes"));
 app.use("/products", require("./routes/products-routes"));
+app.use("/customer", require("./routes/customer-routes"));
 
 module.exports = app;
