@@ -2,7 +2,7 @@
 var config = require("../config");
 var sendgrid = require("sendgrid")(config.sendGridKey);
 
-exports.send = async (to, subject, body) => {
+exports.enviar = async (to, subject, body) => {
   sendgrid.send({
     to: to,
     from: "magno.ufvjm@gmail.com",
