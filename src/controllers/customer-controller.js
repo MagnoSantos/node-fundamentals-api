@@ -1,7 +1,7 @@
 "use strict";
 const repository = require("../repositories/customer-repository");
-const handler = require("../shared/exception-handler");
-const hash = require("../shared/key-management");
+const handler = require("../shared/exception-handler-shared");
+const hash = require("../shared/hash-shared");
 const service = require("../services/email-service");
 
 exports.post = async (req, res, next) => {

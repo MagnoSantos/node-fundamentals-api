@@ -16,6 +16,7 @@
     "debug": "^4.3.2",
     "express": "^4.17.1",
     "http": "0.0.1-security",
+    "jsonwebtoken": "^7.4.0",
     "mongoose": "^6.0.2",
     "sendgrid": "^2.0.0",
     "sengrid": "^2.0.0"

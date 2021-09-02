@@ -1,6 +1,6 @@
 "use strict";
 const repository = require("../repositories/products-repository");
-const handler = require("../shared/exception-handler");
+const handler = require("../shared/exception-handler-shared");
 
 exports.get = async (req, res, next) => {
   try {
