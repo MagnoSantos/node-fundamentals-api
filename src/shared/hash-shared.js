@@ -12,9 +12,3 @@ exports.encryptPassword = (password) => {
     });
   });
 };
-
-exports.isValid = (savedHash, savedSalt, savedIterations, password) => {
-  return (
-    savedHash == crypto.pbkdf2(password, savedSalt, savedIterations, password)
-  );
-};
